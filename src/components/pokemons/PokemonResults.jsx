@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import LoadingBall from '../layout/LoadingBall'
+
 function PokemonResults() {
   const [pokemons, setPokemons] = useState([])
   const [loading, setLoading] = useState(true)
@@ -26,7 +28,7 @@ function PokemonResults() {
       </div>
     )
   } else {
-    return <h3>Loading...</h3>
+    return <LoadingBall />
   }
 }
 export default PokemonResults
