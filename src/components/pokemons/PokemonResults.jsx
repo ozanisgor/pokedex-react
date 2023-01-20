@@ -1,15 +1,11 @@
-import { useEffect, useContext } from 'react'
+import { useContext } from 'react'
 import PokedexContext from '../../context/pokedex/PokedexContext'
 
 import LoadingBall from '../layout/LoadingBall'
 import PokemonItem from './PokemonItem'
 
 function PokemonResults() {
-  const { fetchPokemons, pokemons, loading } = useContext(PokedexContext)
-
-  useEffect(() => {
-    fetchPokemons()
-  }, [])
+  const { pokemons, loading } = useContext(PokedexContext)
 
   if (!loading) {
     return (

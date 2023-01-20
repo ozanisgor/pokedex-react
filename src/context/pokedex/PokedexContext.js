@@ -8,12 +8,15 @@ const POKEAPI_URL = process.env.REACT_APP_POKEAPI_URL
 export const PokedexProvider = ({ children }) => {
   const initialState = {
     pokemons: [],
-    loading: true
+    loading: false
   }
 
   const [state, dispatch] = useReducer(pokedexReducer, initialState)
 
+  // Get initial pokemons (testing purposes)
   const fetchPokemons = async () => {
+    setLoading()
+
     const response = await fetch(`${POKEAPI_URL}/pokemon`)
     const data = await response.json()
 
@@ -37,6 +40,11 @@ export const PokedexProvider = ({ children }) => {
       payload: details
     })
   }
+
+  const setLoading = () =>
+    dispatch({
+      type: 'SET_LOADING'
+    })
 
   return (
     <PokedexContext.Provider
