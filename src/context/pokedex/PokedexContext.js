@@ -1,19 +1,23 @@
-import { createContext, useState } from 'react'
+import { createContext, useReducer } from 'react'
+import pokedexReducer from './PokedexReducer'
 
 const PokedexContext = createContext()
 
 const POKEAPI_URL = process.env.REACT_APP_POKEAPI_URL
 
 export const PokedexProvider = ({ children }) => {
-  const [pokemons, setPokemons] = useState([])
-  const [loading, setLoading] = useState(true)
+  const initialState = {
+    pokemons: [],
+    loading: true
+  }
+
+  const [state, dispatch] = useReducer(pokedexReducer, initialState)
 
   const fetchPokemons = async () => {
     const response = await fetch(`${POKEAPI_URL}/pokemon`)
     const data = await response.json()
 
     fetchPokemonDetails(data.results)
-    setLoading(false)
   }
 
   // another fetch for get single pokemon details
@@ -27,12 +31,21 @@ export const PokedexProvider = ({ children }) => {
         return data
       })
     )
-    setPokemons(details)
+
+    dispatch({
+      type: 'GET_POKEMONS',
+      payload: details
+    })
   }
 
   return (
     <PokedexContext.Provider
-      value={{ pokemons, loading, fetchPokemons, fetchPokemonDetails }}
+      value={{
+        pokemons: state.pokemons,
+        loading: state.loading,
+        fetchPokemons,
+        fetchPokemonDetails
+      }}
     >
       {children}
     </PokedexContext.Provider>
