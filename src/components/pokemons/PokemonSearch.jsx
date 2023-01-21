@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import PokedexContext from '../../context/pokedex/PokedexContext'
+import AlertContext from '../../context/alert/AlertContext'
 
 import PokemonItem from './PokemonItem'
 import LoadingBall from '../layout/LoadingBall'
@@ -10,8 +11,10 @@ function PokemonSearch() {
   }, [])
 
   const [filter, setFilter] = useState('')
+
   const { pokemons, fetchPokemons, loading, searchPokemons, clearPokemons } =
     useContext(PokedexContext)
+  const { setAlert } = useContext(AlertContext)
 
   const filterPokemon = (pokemons, filter) => {
     const filtered = pokemons.filter(pokemon => {
@@ -22,7 +25,12 @@ function PokemonSearch() {
 
   const handleChange = e => {
     setFilter(e.target.value)
-    filterPokemon(pokemons, filter)
+
+    if (filter === '') {
+      setAlert('Please enter something', 'error')
+    } else {
+      filterPokemon(pokemons, filter)
+    }
   }
 
   return (
