@@ -10,7 +10,7 @@ function PokemonSearch() {
   }, [])
 
   const [filter, setFilter] = useState('')
-  const { pokemons, fetchPokemons, loading, searchPokemons } =
+  const { pokemons, fetchPokemons, loading, searchPokemons, clearPokemons } =
     useContext(PokedexContext)
 
   const filterPokemon = (pokemons, filter) => {
@@ -31,7 +31,6 @@ function PokemonSearch() {
         <div>
           <form action="">
             <div className="form-control">
-              <h2>{filter}</h2>
               <div className="relative">
                 <input
                   type="text"
@@ -49,7 +48,12 @@ function PokemonSearch() {
         </div>
         {pokemons.length > 0 && (
           <div>
-            <button className="btn btn-ghost btn-lg">Clear</button>
+            <button
+              onClick={clearPokemons}
+              className="btn btn-ghost btn-lg"
+            >
+              Clear
+            </button>
           </div>
         )}
       </div>

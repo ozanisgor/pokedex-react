@@ -38,6 +38,13 @@ export const PokedexProvider = ({ children }) => {
     })
   }
 
+  const clearPokemons = () => {
+    dispatch({
+      type: 'CLEAR_POKEMONS'
+    })
+    fetchPokemons()
+  }
+
   const setLoading = () =>
     dispatch({
       type: 'SET_LOADING'
@@ -50,7 +57,8 @@ export const PokedexProvider = ({ children }) => {
         loading: state.loading,
         filter: state.filter,
         fetchPokemons,
-        searchPokemons
+        searchPokemons,
+        clearPokemons
       }}
     >
       {children}

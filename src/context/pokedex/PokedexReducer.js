@@ -16,6 +16,11 @@ const pokedexReducer = (state, action) => {
         ...state,
         filter: action.payload
       }
+    case 'CLEAR_POKEMONS':
+      return {
+        ...state,
+        pokemons: []
+      }
     default:
       return state
   }
