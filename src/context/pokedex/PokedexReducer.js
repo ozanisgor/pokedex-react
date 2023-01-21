@@ -11,6 +11,11 @@ const pokedexReducer = (state, action) => {
         ...state,
         loading: true
       }
+    case 'SET_FILTER':
+      return {
+        ...state,
+        filter: action.payload
+      }
     default:
       return state
   }

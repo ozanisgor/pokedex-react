@@ -17,19 +17,16 @@ export const PokedexProvider = ({ children }) => {
   const fetchPokemons = async () => {
     setLoading()
 
-    const response = await fetch(`${POKEAPI_URL}/pokemon`)
+    const response = await fetch(`${POKEAPI_URL}/pokemon?limit=151`)
     const data = await response.json()
-
-    fetchPokemonDetails(data.results)
+    searchPokemons(data.results)
   }
 
   // another fetch for get single pokemon details
-  const fetchPokemonDetails = async data => {
+  const searchPokemons = async data => {
     const details = await Promise.all(
       data.map(async p => {
-        const response = await fetch(
-          `${process.env.REACT_APP_POKEAPI_URL}/pokemon/${p.name}`
-        )
+        const response = await fetch(`${POKEAPI_URL}/pokemon/${p.name}`)
         const data = await response.json()
         return data
       })
@@ -51,8 +48,9 @@ export const PokedexProvider = ({ children }) => {
       value={{
         pokemons: state.pokemons,
         loading: state.loading,
+        filter: state.filter,
         fetchPokemons,
-        fetchPokemonDetails
+        searchPokemons
       }}
     >
       {children}
