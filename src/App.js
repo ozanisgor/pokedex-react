@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar'
 import Alert from './components/layout/Alert'
 import Home from './pages/Home'
 import About from './pages/About'
+import Pokemon from './pages/Pokemon'
 import NotFound from './pages/NotFound'
 import { PokedexProvider } from './context/pokedex/PokedexContext'
 import { AlertProvider } from './context/alert/AlertContext'
@@ -25,6 +26,10 @@ function App() {
                 <Route
                   path="/about"
                   element={<About />}
+                />
+                <Route
+                  path="/pokemon/:name"
+                  element={<Pokemon />}
                 />
                 <Route
                   path="/notfound"

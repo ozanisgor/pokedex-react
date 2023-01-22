@@ -8,6 +8,7 @@ const POKEAPI_URL = process.env.REACT_APP_POKEAPI_URL
 export const PokedexProvider = ({ children }) => {
   const initialState = {
     pokemons: [],
+    pokemon: {},
     loading: false
   }
 
@@ -38,6 +39,22 @@ export const PokedexProvider = ({ children }) => {
     })
   }
 
+  const getPokemon = async name => {
+    setLoading()
+    const response = await fetch(`${POKEAPI_URL}/pokemon/${name}`)
+
+    if (response.status === 404) {
+      window.location = '/notfound'
+    } else {
+      const data = await response.json()
+
+      dispatch({
+        type: 'GET_POKEMON',
+        payload: data
+      })
+    }
+  }
+
   const clearPokemons = () => {
     dispatch({
       type: 'CLEAR_POKEMONS'
@@ -56,9 +73,11 @@ export const PokedexProvider = ({ children }) => {
         pokemons: state.pokemons,
         loading: state.loading,
         filter: state.filter,
+        pokemon: state.pokemon,
         fetchPokemons,
         searchPokemons,
-        clearPokemons
+        clearPokemons,
+        getPokemon
       }}
     >
       {children}
