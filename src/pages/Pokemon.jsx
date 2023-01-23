@@ -11,9 +11,6 @@ function Pokemon() {
     getPokemon(params.name)
   }, [])
 
-  {
-    console.log(pokemon)
-  }
   return <div>{pokemon.name}</div>
 }
 export default Pokemon
